@@ -1,4 +1,4 @@
-b1be33d107f9a07e51e9ea0fc258c11a *DESCRIPTION
+1660ca8d8129de4ba4a290048f2843cc *DESCRIPTION
 4b8be997093da978938e5bacb9033625 *NAMESPACE
 8793274827e221bb7378c1e169812521 *R/SoundShape.R
 9ca49438f370de6c9db4bced87818080 *R/align.wave.R
@@ -11,14 +11,14 @@ c661c792a6da2d3738f2bdd04445278c *R/hypo.surf.R
 5edcb4cc4d74b9eeb503b5edb728421a *R/pca.plot.R
 3d716b21939cc03219256076cb6595f9 *R/threeDspectro.R
 c86b8a8b1e9f1bdbd617253a2126830b *README.md
-be8a8cd22a3fb7d208bdbd5cea7d675d *build/vignette.rds
+9f93eb35df1bd1e413ae5752e871b769 *build/vignette.rds
 f9b020edf06cde17a6446627f9344bfe *data/centralis.RData
 4a4b31c0bad40882e67ff99da90f6c22 *data/cuvieri.RData
 5bba6fdf1aa86bf1db94c17816e0898f *data/eig.sample.RData
 72f683b883ed44d0cebac273c7ae9cc6 *data/kroyeri.RData
 a5f5ee40ed447909373c14c7535260d3 *inst/doc/Getting-started.R
-0e14c12778f78d0f2633e4e6c3b2926e *inst/doc/Getting-started.Rmd
-8ea1559bb3eb1696bd7e6ef79422bde0 *inst/doc/Getting-started.html
+a53d5fd680801482435ae627d518c121 *inst/doc/Getting-started.Rmd
+dec0d4168123edabb1fad753f48e1a37 *inst/doc/Getting-started.html
 ac131a46aaa585ac88be2f92272d50f1 *man/SoundShape.Rd
 212807b6bea66dbca9b5a551aa95a403 *man/align.wave.Rd
 96a7051cf2d24cf7a9ec53d8b7b7a0ec *man/centralis.Rd
@@ -41,4 +41,4 @@ c644e099cc8bbc84db34fd17362491d7 *man/figures/README-Fig9-mean-surface-1.png
 b77a8621a0b54a5bb3e1390242d5d47b *man/kroyeri.Rd
 81678c3cdc972ae100da0de2baaebf2d *man/pca.plot.Rd
 137e3100a65f9c64cf1a865e42841bec *man/threeDspectro.Rd
-0e14c12778f78d0f2633e4e6c3b2926e *vignettes/Getting-started.Rmd
+a53d5fd680801482435ae627d518c121 *vignettes/Getting-started.Rmd
