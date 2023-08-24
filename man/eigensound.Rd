@@ -81,7 +81,7 @@ eigensound(
 \item{TPS.file}{Desired name for the \code{tps} file containing semilandmark coordinates. Should be presented between quotation marks. \strong{Note:} Whenever \code{analysis.type = "twoDshape"}, it will only work if \code{add.points = TRUE}. By default: \code{TPS.file = NULL} (i.e. prevents \code{eigensound} from creating a \code{tps} file)}
 }
 \description{
-\code{eigensound} is the main feature of \code{SoundShape} package. For each \code{".wav"} file on a given folder, the fuction will compute spectrogram data and acquire semilandmarks using a 3D representation of sound (\code{analysis.type = "threeDshape"}), allowing its users to acquire, and simultaneously store point coordinates (i.e. semilandmarkns) as an R object, and/or in TPS format – the native file format of James Rohlf’s TPS series (Rohlf, 2015).
+\code{eigensound} is the main feature of \code{SoundShape} package. For each \code{".wav"} file on a given folder, the fuction will compute spectrogram data and acquire semilandmarks using a 3D representation of sound (\code{analysis.type = "threeDshape"}), allowing its users to acquire, and simultaneously store point coordinates (i.e. semilandmarks) as an R object, and/or in TPS format – the native file format of James Rohlf’s TPS series (Rohlf, 2015).
 
 Moreover, \code{eigensound} also allow its user to export 2D and 3D spectrogram images (\code{plot.exp = TRUE}) that are helpful during the protocol for error verification and for illustrative purposes (see Rocha & Romano \emph{in prep}). Alternativaly, \code{eigensound} feature the option of acquiring semilandmarks as the cross-correlation between energy quantiles and a curve of relative amplitude from 2D spectrograms (\code{analysis.type = "twoDshape"}; see \code{Details} section).
 }
@@ -132,7 +132,7 @@ Adams, D. C., M. L. Collyer, A. Kaliontzopoulou & Sherratt, E. (2017) \emph{Geom
 
 MacLeod, N., Krieger, J. & Jones, K. E. (2013). Geometric morphometric approaches to acoustic signal analysis in mammalian biology. \emph{Hystrix, the Italian Journal of Mammalogy, 24}(1), 110-125.
 
-Rocha, P. & Romano, P. (\emph{in prep}) The shape of sound: A new \code{R} package that crosses the bridge between Bioacoustics and Geometric Morphometrics.
+Rocha, P. & Romano, P. (2021) The shape of sound: A new \code{R} package that crosses the bridge between Bioacoustics and Geometric Morphometrics. \emph{Methods in Ecology and Evolution, 12}(6), 1115-1121.
 
 Rohlf, F.J. (2015) The tps series of software. \emph{Hystrix 26}, 9-12.
 }

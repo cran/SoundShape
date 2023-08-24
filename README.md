@@ -11,6 +11,13 @@ little explored method for biacoustical analysis: the so called
 (2013) and expanded by
 Rocha & Romano (2021).
 
+## Select your acoustic units using Raven Pro Software
+
+Since `SoundShape`'s version 1.3.0, the function `raven.to.wave` allows the creation of `".wav"` files based on selections made using [Raven Pro](https://ravensoundsoftware.com/software/raven-pro/), which is commonplace in bioacoustical analysis. Topic 3 below provides information on how to do it.
+
+
+## Introduction on eigensound analysis
+
 Eigensound is a multidisciplinary method focused on the direct
 comparison between homologous sounds from different species (*i.e.*
 stereotyped calls/acoustic units; Macleod *et al.*, 2013; Rocha &
@@ -244,7 +251,7 @@ be restricted to a bare minimum.
 The selection can be performed on numerous softwares of acoustic
 analysis outside `R` platform (*e.g.*
 [Audacity](https://www.audacityteam.org/), [Raven
-Pro](http://ravensoundsoftware.com/software/raven-pro/)), or using some
+Pro](https://ravensoundsoftware.com/software/raven-pro/)), or using some
 functions from [seewave](https://CRAN.R-project.org/package=seewave) and
 [tuneR](https://CRAN.R-project.org/package=tuneR) packages as
 exemplified below:
@@ -262,6 +269,41 @@ writeWave(cut.cuvieri, filename = file.path(wav.at, "cut.cuvieri.wav"), extensib
 writeWave(cut.centralis, filename = file.path(wav.at, "cut.centralis.wav"), extensible = FALSE)
 writeWave(cut.kroyeri, filename = file.path(wav.at, "cut.kroyeri.wav"), extensible = FALSE)
 ```
+
+Alternatively, since `SoundShape`'s version 1.3.0, the function `raven.to.wave` allows the creation of `".wav"` files based on selections made using [Raven Pro](https://ravensoundsoftware.com/software/raven-pro/), which is commonplace in bioacoustical analysis. Each selection (i.e. line in table; see `raven.list` documentation) should represent an acoustic unit from the sample study:
+
+```r
+
+###
+## Using SoundShape examples:
+
+# Export original sample ".wav" files
+tuneR::writeWave(centralis, extensible = TRUE,
+                filename = file.path(orig.wav, "centralis.wav"))
+tuneR::writeWave(cuvieri, extensible = TRUE,
+                filename = file.path(orig.wav, "cuvieri.wav"))
+tuneR::writeWave(kroyeri, extensible = TRUE,
+                filename = file.path(orig.wav, "kroyeri.wav"))
+
+# Store Raven Pro selection tables at same folder from original ".wav" files
+for(i in 1:length(raven.list)){
+ write.table(raven.list[i], file=file.path(orig.wav, names(raven.list)[i]),
+               quote=FALSE, sep="\t", row.names = FALSE,
+               col.names = colnames(raven.list[[i]]))  } # end loop
+
+# Verify if folder has both original ".wav" files and Raven's selections
+dir(orig.wav)
+
+###
+## Start here when using your own recordings
+
+# Export a ".wav" sample for each selection made in Raven Pro
+raven.to.wave(orig.wav.folder = orig.wav, wav.samples = wav.at)
+
+# Verify samples
+dir(wav.at)
+```
+
 
 ## 4\. Three steps that avoid errors and biased results
 
@@ -324,7 +366,7 @@ window (MacLeod et al., 2013).
 Although this arbitrary alignment could be performed on numerous
 software of acoustic analysis outside `R` platform (*e.g.*
 [Audacity](https://www.audacityteam.org/), [Raven
-Pro](http://ravensoundsoftware.com/software/raven-pro/)), `align.wave`
+Pro](https://ravensoundsoftware.com/software/raven-pro/)), `align.wave`
 function (`SoundShape` package) provide an easy alternative to
 automatically align the units at the beginning of a sound window whilst
 also standardizing the durations of `".wav"` files (see section 4.1),

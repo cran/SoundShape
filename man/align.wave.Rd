@@ -9,6 +9,7 @@ align.wave(
   wav.to = "Aligned",
   time.length = 1,
   time.perc = 0.005,
+  flim = NULL,
   dBlevel = 25,
   f = 44100,
   wl = 512,
@@ -24,6 +25,8 @@ align.wave(
 
 \item{time.perc}{slight time gap (in percentage) relative to the intended length that encompass all sounds in the study (i.e. \code{time.length}). Intervals are added before and after the minimum and maximum time coordinates (X-values) from the selected curve of relative amplitude (\code{dBlevel}). By default: \code{time.perc = 0.005} (i.e. 0.5\%)}
 
+\item{flim}{modifications of the frequency limits (Y-axis) to focus on acoustic units. Useful for recordings with low signal-to-noise ratio. Vector with two values in kHz. By default: \code{flim = NULL}}
+
 \item{dBlevel}{absolute amplitude value to be used as relative amplitude contour, which will serve as reference for call placement. By default: \code{dBlevel = 25}}
 
 \item{f}{sampling frequency of \code{".wav"} files (in Hz). By default: \code{f = 44100}}
@@ -33,7 +36,7 @@ align.wave(
 \item{ovlp}{overlap between two successive windows (in \%) for increased spectrogram resolution. By default: \code{ovlp = 70}}
 }
 \description{
-Recreate each \code{".wav"} file on a given folder while placing calls at the beggining of sound window. New \code{".wav"} files will be stored on a new folder, which is automatically created.
+Recreate each \code{".wav"} file on a given folder while placing calls at the beginning of sound window. New \code{".wav"} files will be stored on a new folder, which is automatically created.
 }
 \examples{
 \donttest{
@@ -67,6 +70,9 @@ align.wave(wav.at = wav.at, wav.to = "Aligned",
            time.length = 0.5, time.perc = 0.01, dBlevel = 25)
 
 # Verify alignment using eigensound function featuring analysis.type = "twoDshape"
+eigensound(analysis.type = "twoDshape", wav.at = file.path(wav.at, "Aligned"), store.at = store.at,
+           flim=c(0, 3), tlim=c(0,0.5), dBlevel = 25, plot.exp = TRUE, plot.as = "jpeg")
+# To see jpeg files created, check folder specified by store.at
 
 }
 
@@ -74,7 +80,7 @@ align.wave(wav.at = wav.at, wav.to = "Aligned",
 \references{
 MacLeod, N., Krieger, J. & Jones, K. E. (2013). Geometric morphometric approaches to acoustic signal analysis in mammalian biology. \emph{Hystrix, the Italian Journal of Mammalogy, 24}(1), 110-125.
 
-Rocha, P. & Romano, P. (\emph{in prep}) The shape of sound: A new \code{R} package that crosses the bridge between Bioacoustics and Geometric Morphometrics. \emph{Methods in Ecology and Evolution}
+Rocha, P. & Romano, P. (2021) The shape of sound: A new \code{R} package that crosses the bridge between Bioacoustics and Geometric Morphometrics. \emph{Methods in Ecology and Evolution, 12}(6), 1115-1121.
 }
 \seealso{
 \code{\link{eigensound}}

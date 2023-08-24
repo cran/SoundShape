@@ -1,6 +1,6 @@
 #' Sound waves onto morphometric data
 #'
-#' @description \code{eigensound} is the main feature of \code{SoundShape} package. For each \code{".wav"} file on a given folder, the fuction will compute spectrogram data and acquire semilandmarks using a 3D representation of sound (\code{analysis.type = "threeDshape"}), allowing its users to acquire, and simultaneously store point coordinates (i.e. semilandmarkns) as an R object, and/or in TPS format – the native file format of James Rohlf’s TPS series (Rohlf, 2015).
+#' @description \code{eigensound} is the main feature of \code{SoundShape} package. For each \code{".wav"} file on a given folder, the fuction will compute spectrogram data and acquire semilandmarks using a 3D representation of sound (\code{analysis.type = "threeDshape"}), allowing its users to acquire, and simultaneously store point coordinates (i.e. semilandmarks) as an R object, and/or in TPS format – the native file format of James Rohlf’s TPS series (Rohlf, 2015).
 #'
 #' Moreover, \code{eigensound} also allow its user to export 2D and 3D spectrogram images (\code{plot.exp = TRUE}) that are helpful during the protocol for error verification and for illustrative purposes (see Rocha & Romano \emph{in prep}). Alternativaly, \code{eigensound} feature the option of acquiring semilandmarks as the cross-correlation between energy quantiles and a curve of relative amplitude from 2D spectrograms (\code{analysis.type = "twoDshape"}; see \code{Details} section).
 #'
@@ -46,7 +46,7 @@
 #'
 #' MacLeod, N., Krieger, J. & Jones, K. E. (2013). Geometric morphometric approaches to acoustic signal analysis in mammalian biology. \emph{Hystrix, the Italian Journal of Mammalogy, 24}(1), 110-125.
 #'
-#' Rocha, P. & Romano, P. (\emph{in prep}) The shape of sound: A new \code{R} package that crosses the bridge between Bioacoustics and Geometric Morphometrics.
+#' Rocha, P. & Romano, P. (2021) The shape of sound: A new \code{R} package that crosses the bridge between Bioacoustics and Geometric Morphometrics. \emph{Methods in Ecology and Evolution, 12}(6), 1115-1121.
 #'
 #' Rohlf, F.J. (2015) The tps series of software. \emph{Hystrix 26}, 9-12.
 #'
@@ -164,18 +164,18 @@ eigensound <- function(analysis.type = NULL, wav.at = NULL, store.at = wav.at, d
       # Plot semilandmarks as points or sound surface
       if(plot.exp==TRUE){
         if(plot.as == "jpeg"){grDevices::jpeg(width =5000,height = 3500, units = "px", res = 500,
-                                   filename=paste(store.at,"/", sub(".wav","",file), ".jpg", sep=""))} # compressed images
+                                              filename=paste(store.at,"/", sub(".wav","",file), ".jpg", sep=""))} # compressed images
         if(plot.as=="tiff"|plot.as=="tif"){grDevices::tiff(width=5000, height=3500, units="px", res=500,
-                                                filename=paste(store.at, "/", sub(".wav", "", file), ".tif", sep=""))} # uncompressed images
+                                                           filename=paste(store.at, "/", sub(".wav", "", file), ".tif", sep=""))} # uncompressed images
         if(plot.type=="surface"){plot3D::persp3D(x=time.sub, y=freq.sub, z=t(amp.sub),
-                                         border="black", lwd=0.1, theta=rotate.Xaxis, phi=rotate.Yaxis, resfac=1, r=3,expand=0.5, cex.axis=0.7,
-                                         scale=T, axes=T, col=seewave::spectro.colors(n=100), ticktype="detailed", nticks=4,            xlab="Time (s)", ylab="Frequency (kHz)", zlab="Amplitude (dB)",
-                                         main= sub(".wav", "", file), clab=expression('Amplitude dB'))}
+                                                 border="black", lwd=0.1, theta=rotate.Xaxis, phi=rotate.Yaxis, resfac=1, r=3,expand=0.5, cex.axis=0.7,
+                                                 scale=T, axes=T, col=seewave::spectro.colors(n=100), ticktype="detailed", nticks=4,            xlab="Time (s)", ylab="Frequency (kHz)", zlab="Amplitude (dB)",
+                                                 main= sub(".wav", "", file), clab=expression('Amplitude dB'))}
         if(plot.type=="points"){plot3D::scatter3D(x=ind.3D[,1], y=ind.3D[,2], z=ind.3D[,3],
-                                          pch=21, cex=0.5, theta=rotate.Xaxis, phi=rotate.Yaxis, resfac=1, r=3, expand=0.5, cex.axis=0.7,
-                                          scale=T, axes=T, col=seewave::spectro.colors(n=100), ticktype="detailed", nticks=4,
-                                          xlab="Time (s)", ylab="Frequency (kHz)", zlab="Amplitude (dB)",
-                                          main= sub(".wav", "", file), clab=expression('Amplitude dB'))}
+                                                  pch=21, cex=0.5, theta=rotate.Xaxis, phi=rotate.Yaxis, resfac=1, r=3, expand=0.5, cex.axis=0.7,
+                                                  scale=T, axes=T, col=seewave::spectro.colors(n=100), ticktype="detailed", nticks=4,
+                                                  xlab="Time (s)", ylab="Frequency (kHz)", zlab="Amplitude (dB)",
+                                                  main= sub(".wav", "", file), clab=expression('Amplitude dB'))}
 
         grDevices::dev.off()  } # end threeDshape plot of each ".wav" file
 
@@ -322,15 +322,15 @@ eigensound <- function(analysis.type = NULL, wav.at = NULL, store.at = wav.at, d
 
         if(add.points==FALSE){
           seewave::spectro(Wav, f=f, wl=wl, ovlp=ovlp, osc=F, scale=F, grid=F,
-                      main= sub(".wav", "", file), flim=flim, tlim=tlim,
-                      cont=add.contour,contlevels=seq(-dBlevel,-dBlevel,1),lwd=lwd,
-                      collevels=seq(-back.amp, 0, 0.1))
+                           main= sub(".wav", "", file), flim=flim, tlim=tlim,
+                           cont=add.contour,contlevels=seq(-dBlevel,-dBlevel,1),lwd=lwd,
+                           collevels=seq(-back.amp, 0, 0.1))
         } # end contour
 
         if(add.points==TRUE){
           seewave::spectro(Wav, f=f, wl=wl, ovlp=ovlp, osc=F, scale=F, grid=F,
-                    main= sub(".wav", "", file), flim=flim, tlim=tlim,
-                    collevels=seq(-back.amp, 0, 0.1))
+                           main= sub(".wav", "", file), flim=flim, tlim=tlim,
+                           collevels=seq(-back.amp, 0, 0.1))
           if(add.contour==TRUE){graphics::polygon(x=con$x, y=con$y, lwd=lwd)}
           graphics::points(x=(SM$Time)/mag.time, y=SM$Frequency.values, pch=21, col="black", bg="red", cex=1.1)
           graphics::text(x=(SM$Time)/mag.time, y=SM$Frequency.values,cex=0.7, labels=SM$SM.numbers, pos=c(3, rep(2, dim(SM1)[1]), 1, rep(4, dim(SM2)[1]))) ## SM numbers
@@ -360,7 +360,7 @@ eigensound <- function(analysis.type = NULL, wav.at = NULL, store.at = wav.at, d
 
 
   if(analysis.type == "twoDshape" && add.points == TRUE){ coord <- coord2D }
-    else( coord <- NULL )# twoDshape results
+  else( coord <- NULL )# twoDshape results
   if(analysis.type == "threeDshape"){ coord <- coord3D } # threeDshape results
 
   results <- coord
