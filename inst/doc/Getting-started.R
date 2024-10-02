@@ -1,10 +1,10 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 oldpar <- graphics::par(no.readonly = TRUE)
 
 ## ----Fig1-3D-spectros, fig.align='center', fig.height=3.5, fig.width=7.2------
@@ -27,7 +27,7 @@ threeDspectro(cuvieri.cut, flim=c(0, 2.5), plot.type="points",
               colkey=list(plot=FALSE), cex.axis=0.4, cex.lab=0.8)
 
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 graphics::par(oldpar)
 
 ## ----Fig2-2D-spectros, fig.align='center', fig.width=7.2, fig.height=3.5------
@@ -36,7 +36,7 @@ par(mfrow=c(1,2), mar=c(4,4,2,1)) # view side by side
 seewave::oscillo(cuvieri.cut, title="Oscillogram")
 seewave::spectro(cuvieri.cut, flim=c(0, 2.5), grid=FALSE, scale=FALSE, main="Spectrogram")
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 graphics::par(oldpar)
 
 ## ----citation-----------------------------------------------------------------
@@ -80,7 +80,7 @@ seewave::spectro(cut.cuvieri, flim=c(0, 4), tlim=c(0, 0.8), main="data(cuvieri)"
 seewave::spectro(cut.kroyeri, flim=c(0, 4), tlim=c(0, 0.8), main="data(kroyeri)", 
                  wl=512, f=44100, ovlp=70, grid=FALSE, scale=FALSE)
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 graphics::par(oldpar)
 
 ## ----Fig7-dBlevel-curve, fig.align='center', fig.height=3, fig.width=7.2------
@@ -102,7 +102,7 @@ for(i in 1:length(s.kro$amp)){if(s.kro$amp[i] == -Inf |s.kro$amp[i] <= -40)
 plot3D::contour3D(x=s.kro$time, y=s.kro$freq, colvar=t(s.kro$amp), z=-25,
                   plot=T, add=T, addbox=F, col="black", lwd=1.9, nlevels=2, dDepth=0.25)
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 graphics::par(oldpar)
 
 ## ----Fig8-sampling-grid, fig.align='center', fig.height=4, fig.width=7.2------
@@ -120,7 +120,7 @@ threeDspectro(cut.kroyeri, samp.grid=TRUE, x.length=70, y.length=47, plot.type="
               colkey=list(plot=FALSE), cex.axis=0.4, cex.lab=0.8)
 
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 graphics::par(oldpar)
 
 ## ----pca----------------------------------------------------------------------

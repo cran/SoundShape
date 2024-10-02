@@ -1,10 +1,10 @@
 #' Export sample \code{".wav"} files using selections from Raven Pro software.
 #'
-#' @description Create one \code{".wav"} file for each selection created using \href{https://ravensoundsoftware.com/software/raven-pro/}{Raven Pro} software, which is commonplace in bioacoustical analysis. Each selection (i.e. line in table) should represent an acoustic unit from the sample study.
+#' @description Create one \code{".wav"} file for each selection created using \href{https://www.ravensoundsoftware.com/software/raven-pro/}{Raven Pro} software, which is commonplace in bioacoustical analysis. Each selection (i.e. line in table) should represent an acoustic unit from the sample study.
 #'
 #' @param orig.wav.folder filepath to the folder where original \code{".wav"} files are stored. Should be presented between quotation marks. By default: \code{orig.wav.folder = NULL} (i.e. user must specify the filepath to \code{".wav"} files)
 #'
-#' @param raven.at filepath to the folder where selection tables from \href{https://ravensoundsoftware.com/software/raven-pro/}{Raven Pro} software are stored. Should be presented between quotation marks. File name should end with \code{"selections.txt"}. By default: \code{raven.at = orig.wav.folder} (i.e. raven tables stored in the same folder as original  \code{".wav"} files)
+#' @param raven.at filepath to the folder where selection tables from \href{https://www.ravensoundsoftware.com/software/raven-pro/}{Raven Pro} software are stored. Should be presented between quotation marks. File name should end with \code{"selections.txt"}. By default: \code{raven.at = orig.wav.folder} (i.e. raven tables stored in the same folder as original  \code{".wav"} files)
 #'
 #' @param wav.samples folder where new \code{".wav"} files will be stored. Can be either a filepath to the intended folder, or the name of the folder i.e.(\code{wav.samples = "wav samples"}). In the later case, a new folder will be created within the one specified by \code{orig.wav.folder}. Should be presented between quotation marks. By default: \code{wav.samples = "wav samples"}
 #'
@@ -19,7 +19,7 @@
 #' \itemize{
 #'   \item{\url{https://github.com/p-rocha/SoundShape}}
 #'   \item{Report bugs at \url{https://github.com/p-rocha/SoundShape/issues}}
-#'   \item{Raven Pro software \url{https://ravensoundsoftware.com/software/raven-pro/}}}
+#'   \item{Raven Pro software \url{https://www.ravensoundsoftware.com/software/raven-pro/}}}
 #'
 #'
 #' @examples
@@ -118,8 +118,6 @@ raven.to.wave <- function(orig.wav.folder=NULL, raven.at=orig.wav.folder, wav.sa
     warning("Number of selection tables from Raven Pro software differ from number of '.wav' files at folder specified by 'wav.at'. Some files may not have been analysed.")
   }
 
-
-
   # Create folder to store sample wav files
   if(!dir.exists(wav.samples) &
      !dir.exists(file.path(orig.wav.folder, wav.samples)))
@@ -129,36 +127,41 @@ raven.to.wave <- function(orig.wav.folder=NULL, raven.at=orig.wav.folder, wav.sa
   # For each wav file, use Raven selections to create new files
   for(wav in wav.files){
 
-    raven.temp <- utils::read.table(file.path(orig.wav.folder,
-                                       grep(stringr::str_sub(wav,start=0, end = -5),
-                                            raven.tables, value=T)), h=T, sep="\t")
+    if(length(
+      grep(stringr::str_sub(wav, start=0, end = -5), raven.tables, value=T)) == 0 ){
+
+      stop(paste("The file '", wav, "' has no Raven selection table associated with it. File names from selection tables must be exactly the same as '.wav' files, and end with 'selections.txt'.", sep=""))
+    }
+
+    raven.temp <- utils::read.table(file.path(
+      orig.wav.folder,
+      grep(stringr::str_sub(wav,start=0, end = -5),
+           raven.tables, value=T)), h=T, sep="\t")
+
     # Calculate duration (delta time)
     raven.temp$Delta.Time <- raven.temp$End.Time..s.-raven.temp$Begin.Time..s.
 
-    for(i in 1:length(raven.temp$Selection[raven.temp$View=="Waveform 1"])){
+    # Prevent errors related to multiple "View" levels
+    raven.temp <- raven.temp[raven.temp$View==levels(as.factor(raven.temp$View))[1],]
+
+
+    for(i in 1:length(raven.temp$Selection)){
 
       wav.temp <- tuneR::readWave(file.path(orig.wav.folder, wav), units="seconds",
-                                  from= raven.temp$Begin.Time..s.[
-                                    raven.temp$Selection== i &
-                                      raven.temp$View=="Waveform 1"] -
-                                    raven.temp$Delta.Time[
-                                      raven.temp$Selection== i &
-                                        raven.temp$View=="Waveform 1"]*0.15,
-                                  to= raven.temp$Begin.Time..s.[
-                                    raven.temp$Selection== i &
-                                      raven.temp$View=="Waveform 1"] +
-                                    raven.temp$Delta.Time[
-                                      raven.temp$Selection== i &
-                                        raven.temp$View=="Waveform 1"]*1.15)
-
+                                  from= raven.temp$Begin.Time..s.[i] -
+                                    raven.temp$Delta.Time[i]*0.15,
+                                  to= raven.temp$Begin.Time..s.[i] +
+                                    raven.temp$Delta.Time[i]*1.15)
 
       if(dir.exists(wav.samples)){
         tuneR::writeWave(wav.temp, extensible = T,
-                         filename=file.path(wav.samples, ifelse(i<10,
-                                                                paste(stringr::str_sub(wav,start=0, end = -5),
-                                                                      "_sample-0", i, ".wav", sep=""),
-                                                                paste(stringr::str_sub(wav,start=0, end = -5),
-                                                                      "_sample-", i, ".wav", sep="")))) }
+                         filename=file.path(
+                           wav.samples,
+                           ifelse(
+                             i<10, paste(stringr::str_sub(wav,start=0, end = -5),
+                                         "_sample-0", i, ".wav", sep=""),
+                             paste(stringr::str_sub(wav,start=0, end = -5),
+                                   "_sample-", i, ".wav", sep="")))) }
 
       if(!dir.exists(wav.samples)){
         tuneR::writeWave(wav.temp, extensible = T,
